@@ -64,6 +64,7 @@ html,body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
 }
 
 /* ===== SOBRE ANIMADO ===== */
@@ -106,7 +107,7 @@ html,body{
 @keyframes openEnvelope {
   0% {transform:rotateX(0deg);}
   50% {transform:rotateX(40deg);}
-  100% {transform:rotateX(0deg) translateY(-220px) scale(0.8);}
+  100% {transform:translateY(-140px) scale(0.8);}
 }
 
 /* ===== CARTA ===== */
@@ -116,15 +117,17 @@ html,body{
   border-radius:24px;
   backdrop-filter:blur(14px);
   box-shadow:0 0 25px rgba(255,107,255,0.3);
-  padding:40px 35px;
+  padding:35px 25px;
   max-width:460px;
   opacity:0;
-  transform:translateY(30px) scale(0.9);
-  transition:opacity 1.3s ease, transform 1.3s ease;
+  margin:auto;
+  transition:opacity 1s ease, transform 1s ease;
+  transform:scale(0.9);
+  position:relative;
 }
 .card.show {
   opacity:1;
-  transform:translateY(0) scale(1);
+  transform:scale(1);
   animation:cardGlow 4s ease-in-out infinite alternate;
 }
 @keyframes cardGlow{
@@ -132,16 +135,18 @@ html,body{
   100%{box-shadow:0 0 35px rgba(255,182,255,0.5);}
 }
 .card h1{
-  font-size:26px;
+  font-size:24px;
   color:#ffd6ff;
   text-shadow:0 0 10px rgba(255,182,255,0.5);
-  margin-bottom:15px;
+  margin-bottom:12px;
 }
 .card p{
-  font-size:17px;
+  font-size:16px;
   line-height:1.6;
   white-space:pre-line;
   opacity:0.95;
+  margin:0 auto;
+  max-width:380px;
 }
 
 /* ===== PERSONAJES ===== */
@@ -149,13 +154,13 @@ html,body{
   display:flex;
   justify-content:center;
   align-items:flex-end;
-  gap:12px;
-  margin-top:25px;
+  gap:10px;
+  margin-top:20px;
   flex-wrap:wrap;
   position:relative;
 }
 .character{
-  height:250px;
+  height:230px;
   width:auto;
   opacity:0;
   object-fit:contain;
@@ -163,10 +168,10 @@ html,body{
   animation:floaty 6s ease-in-out infinite;
   filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5)) brightness(1.05);
 }
-#nick{transform:translateX(-150%) translateY(10px);}
+#nick{transform:translateX(-150%) translateY(0);}
 #judy{transform:translateX(150%);}
 .character.show{opacity:1;transform:translateX(0) translateY(0);}
-@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
 
 /* ===== BOTÓN ===== */
 .btn{
@@ -195,6 +200,14 @@ html,body{
   0% { transform:translateY(-10vh) rotate(0deg); opacity:1; }
   100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
 }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:600px) {
+  .card { max-width:90%; padding:25px 18px; }
+  h1 { font-size:20px; }
+  p { font-size:14.5px; }
+  .character { height:180px; }
+}
 </style>
 </head>
 <body>
@@ -218,8 +231,8 @@ html,body{
   <div id="scene2" style="display:none;">
     <div class="card" id="card1">
       <h1>En la ciudad de Zootopia 🌆</h1>
-      <p>dos almas se cruzaron,  
-y sin saberlo, comenzaron su aventura.  
+      <p>Dos almas se cruzaron y sin saberlo  
+empezaron su aventura.  
 Nick y Judy, tan distintos pero tan iguales,  
 como tú y yo 💞</p>
       <div class="characters">
@@ -236,7 +249,7 @@ como tú y yo 💞</p>
       <h1>Gracias por ser mi Zootopia 💫</h1>
       <p>Contigo todo tiene sentido,  
 mi mundo brilla un poco más.  
-Eres mi calma, mi locura, mi hogar.  
+Eres mi calma, mi locura y mi hogar.  
 Te amo con todo mi corazón 💖</p>
       <a href="#" class="btn" onclick="restart()">Volver a empezar</a>
     </div>
@@ -260,15 +273,15 @@ function openEnvelope(){
 
   setTimeout(()=>{
     document.getElementById("scene1").style.display="none";
-    document.getElementById("scene2").style.display="block";
+    document.getElementById("scene2").style.display="flex";
     document.getElementById("bg1").classList.remove("show");
     document.getElementById("bg2").classList.add("show");
     const card=document.getElementById("card1");
-    setTimeout(()=>card.classList.add("show"),200);
+    setTimeout(()=>card.classList.add("show"),300);
     setTimeout(()=>{
       document.getElementById("nick").classList.add("show");
       document.getElementById("judy").classList.add("show");
-    },1000);
+    },800);
     lanzarConfetti();
     confettiInterval=setInterval(lanzarConfetti,4000);
   },1200);
@@ -276,7 +289,7 @@ function openEnvelope(){
 
 function nextScene(){
   document.getElementById("scene2").style.display="none";
-  document.getElementById("scene3").style.display="block";
+  document.getElementById("scene3").style.display="flex";
   document.getElementById("bg2").classList.remove("show");
   document.getElementById("bg3").classList.add("show");
   lanzarConfetti();
