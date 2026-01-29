@@ -11,7 +11,7 @@
   --shadow: rgba(0, 0, 0, 0.5);
 }
 
-/* ===== RESET & BASE ===== */
+/* ===== BASE ===== */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{
   width:100%;height:100%;
@@ -24,7 +24,7 @@ html,body{
   justify-content:center;
 }
 
-/* ===== BACKGROUNDS ===== */
+/* ===== FONDOS ===== */
 .bg{
   position:fixed;
   inset:0;
@@ -49,7 +49,7 @@ html,body{
 .overlay{
   position:fixed;
   inset:0;
-  background:radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+  background:radial-gradient(circle at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.6) 100%);
   z-index:1;
 }
 
@@ -66,7 +66,7 @@ html,body{
   100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
 }
 
-/* ===== MAIN STAGE ===== */
+/* ===== ESCENAS ===== */
 .stage{
   position:relative;
   z-index:10;
@@ -80,7 +80,7 @@ html,body{
   justify-content:center;
 }
 
-/* ===== ENVELOPE ===== */
+/* ===== SOBRE ===== */
 .envelope {
   width:220px;
   height:150px;
@@ -113,7 +113,7 @@ html,body{
   to { transform:translate(-50%,-50%) scale(1.2); }
 }
 
-/* ===== CARD ===== */
+/* ===== CARTA ===== */
 .card {
   background:rgba(255,255,255,0.1);
   border:1px solid rgba(255,182,193,0.3);
@@ -143,31 +143,51 @@ p {
   white-space:pre-line;
 }
 
-/* ===== CHARACTERS ===== */
+/* ===== PERSONAJES ===== */
 .characters {
   display:flex;
   justify-content:center;
   align-items:flex-end;
-  gap:20px;
-  margin-top:20px;
+  gap:10px;
+  margin-top:25px;
   flex-wrap:wrap;
+  position:relative;
 }
+
+/* Animación de entrada */
 .character {
-  width:38vw;
-  max-width:220px;
-  height:auto;
-  opacity:0.97;
+  height:250px;
+  width:auto;
+  opacity:0;
+  object-fit:contain;
   filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5))
           brightness(1.05)
           contrast(1.05);
   animation:floaty 6s ease-in-out infinite;
+  transition:all 1.5s ease;
 }
+.character.show {
+  opacity:1;
+}
+#nick {
+  transform:translateX(-120%) translateY(10px);
+}
+#judy {
+  transform:translateX(120%);
+}
+#nick.show {
+  transform:translateX(0) translateY(10px);
+}
+#judy.show {
+  transform:translateX(0);
+}
+
 @keyframes floaty {
   0%,100% { transform:translateY(0); }
   50% { transform:translateY(-10px); }
 }
 
-/* ===== BUTTON ===== */
+/* ===== BOTÓN ===== */
 .btn {
   display:inline-block;
   background:linear-gradient(90deg,#ff8fb5,#ff6b8a);
@@ -187,13 +207,13 @@ p {
   .card { max-width:85%; padding:25px 20px; }
   h1 { font-size:22px; }
   p { font-size:15px; }
-  .character { max-width:180px; }
+  .character { height:180px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ===== BACKGROUNDS ===== -->
+<!-- ===== FONDOS ===== -->
 <div class="bg show" id="bg1" style="background-image:url('fondo1.jpg')"></div>
 <div class="bg" id="bg2" style="background-image:url('fondo2.jpg')"></div>
 <div class="bg" id="bg3" style="background-image:url('fondo3.jpg')"></div>
@@ -215,10 +235,12 @@ p {
       <p>dos almas se cruzaron y, sin saberlo,  
 empezaron a escribir su propia historia.  
 Juntos aprendieron que el amor rompe todas las reglas 🦊🐰</p>
+
       <div class="characters">
-        <img src="nick.png" class="character" alt="Nick Wilde">
-        <img src="judy.png" class="character" alt="Judy Hopps">
+        <img src="nick.png" id="nick" class="character" alt="Nick Wilde">
+        <img src="judy.png" id="judy" class="character" alt="Judy Hopps">
       </div>
+
       <a class="btn" href="#" onclick="startScene3()">Continuar ➜</a>
     </div>
   </div>
@@ -253,6 +275,13 @@ function startScene2(){
   document.getElementById("bg2").classList.add("show");
   document.getElementById("scene1").style.display="none";
   document.getElementById("scene2").style.display="block";
+
+  // Animación de entrada de Nick y Judy
+  setTimeout(()=>{
+    document.getElementById("nick").classList.add("show");
+    document.getElementById("judy").classList.add("show");
+  },500);
+
   lanzarConfetti();
   confettiInterval=setInterval(lanzarConfetti,4000);
 }
