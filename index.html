@@ -80,13 +80,11 @@ html,body{
   animation:envelopeIntro 3s ease forwards;
   z-index:20;
 }
-
 @keyframes envelopeIntro {
   0% {opacity:0; top:100%; transform:translateX(-50%) scale(0.9);}
   60% {opacity:1; top:40%; transform:translateX(-50%) scale(1.05);}
   100% {opacity:1; top:10vh; transform:translateX(-50%) scale(1);}
 }
-
 .envelope::before{
   content:"";
   position:absolute;
@@ -109,7 +107,7 @@ html,body{
   to{transform:translate(-50%,-50%) scale(1.2);}
 }
 
-/* ✨ Efectos */
+/* ✨ AURA MÁGICA GIRATORIA */
 .magic-glow {
   position:absolute;
   top:50%;
@@ -128,6 +126,7 @@ html,body{
   to{transform:translate(-50%,-50%) rotate(360deg);}
 }
 
+/* Apertura del sobre */
 .envelope.open {
   animation:openEnvelope 1s forwards ease-in-out;
 }
@@ -137,7 +136,7 @@ html,body{
   100% {top:-20vh; transform:translateX(-50%) scale(0.8); opacity:0;}
 }
 
-/* ✨ Brillo mágico */
+/* ✨ Efecto de brillo mágico */
 .sparkle {
   position:fixed;
   top:0;left:0;width:100%;height:100%;
@@ -194,14 +193,14 @@ html,body{
 /* ===== PERSONAJES ===== */
 .characters{
   display:flex;
-  justify-content:flex-start; /* 👈 ligeramente a la izquierda */
+  justify-content:center; /* 👈 centrados nuevamente */
   align-items:flex-end;
-  gap:25px;
+  gap:40px;
   margin-top:25px;
-  flex-wrap:nowrap;
   position:relative;
-  transform:translateX(8%); /* mueve todo 8% a la izquierda */
+  transform:translateX(-5%); /* pequeño balance hacia la izquierda */
 }
+
 .character{
   height:220px;
   width:auto;
@@ -211,12 +210,26 @@ html,body{
   filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5)) brightness(1.05);
   animation:floaty 5s ease-in-out infinite;
 }
+
 .character.show{
   opacity:1;
   transform:translateY(0);
 }
-#nick, #judy {transform:translateY(30px);}
-@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+#nick{
+  order:1;
+  transform:translateY(30px) translateX(-10px); /* Nick ligeramente a la izquierda */
+}
+
+#judy{
+  order:2;
+  transform:translateY(30px) translateX(10px); /* Judy un poco más centrada */
+}
+
+@keyframes floaty{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+}
 
 /* ===== BOTÓN ===== */
 .btn{
