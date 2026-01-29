@@ -140,7 +140,7 @@ html,body{
   100% {top:-20vh; transform:translateX(-50%) scale(0.8); opacity:0;}
 }
 
-/* ✨ Efecto de brillo mágico al abrir */
+/* ✨ Efecto de brillo mágico */
 .sparkle {
   position:fixed;
   top:0;left:0;width:100%;height:100%;
@@ -199,26 +199,26 @@ html,body{
   display:flex;
   justify-content:center;
   align-items:flex-end;
-  gap:10px;
-  margin-top:20px;
-  flex-wrap:wrap;
+  gap:25px;
+  margin-top:25px;
+  flex-wrap:nowrap;
   position:relative;
 }
 .character{
-  height:230px;
+  height:220px;
   width:auto;
   opacity:0;
   object-fit:contain;
-  transition:all 1s ease;
+  transition:all 1.2s ease;
   filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5)) brightness(1.05);
+  animation:floaty 5s ease-in-out infinite;
 }
 .character.show{
   opacity:1;
   transform:translateY(0);
 }
-#nick{transform:translateX(-100px);}
-#judy{transform:translateX(100px);}
-@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+#nick, #judy {transform:translateY(30px);}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
 
 /* ===== BOTÓN ===== */
 .btn{
@@ -250,10 +250,11 @@ html,body{
 
 /* ===== RESPONSIVE ===== */
 @media (max-width:600px) {
+  .characters {gap:10px;}
+  .character {height:160px;}
   .card { max-width:90%; padding:25px 18px; }
   h1 { font-size:20px; }
   p { font-size:14.5px; }
-  .character { height:180px; }
 }
 </style>
 </head>
@@ -283,10 +284,12 @@ html,body{
 empezaron su aventura.  
 Nick y Judy, tan distintos pero tan iguales,  
 como tú y yo 💞</p>
+
       <div class="characters">
         <img src="nick.png" id="nick" class="character" alt="Nick Wilde">
         <img src="judy.png" id="judy" class="character" alt="Judy Hopps">
       </div>
+
       <a href="#" class="btn" onclick="nextScene()">Continuar ➜</a>
     </div>
   </div>
@@ -316,7 +319,6 @@ function openEnvelope(){
   const envelope=document.getElementById("envelope");
   envelope.classList.add("open");
   
-  // Efecto de brillo mágico instantáneo
   const sparkle=document.createElement("div");
   sparkle.className="sparkle";
   document.body.appendChild(sparkle);
@@ -326,7 +328,6 @@ function openEnvelope(){
     document.body.addEventListener('touchstart',()=>musica.play(),{once:true});
   });
 
-  // Transición rápida y suave
   setTimeout(()=>{
     envelope.style.display="none";
     document.getElementById("scene2").style.display="flex";
@@ -342,7 +343,7 @@ function openEnvelope(){
     
     lanzarConfetti();
     confettiInterval=setInterval(lanzarConfetti,4000);
-  },900); // 🔥 antes tardaba 1500ms, ahora es más fluido
+  },900);
 }
 
 function nextScene(){
