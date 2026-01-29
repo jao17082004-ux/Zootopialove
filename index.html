@@ -1,9 +1,10 @@
+
 <!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Zootopia 💖 Nick & Judy</title>
+<title>Zootopia Love 💖</title>
 <style>
   :root{
     --bg:#0f1226;
@@ -35,7 +36,7 @@
       radial-gradient(1px 1px at 50% 80%, #fff, transparent),
       radial-gradient(2px 2px at 10% 90%, #fff, transparent),
       radial-gradient(1.5px 1.5px at 70% 20%, #fff, transparent);
-    animation: twinkle 5s infinite alternate ease-in-out;
+    animation: twinkle 6s infinite alternate ease-in-out;
     opacity:0.6;
     z-index:0;
   }
@@ -60,15 +61,18 @@
   .envelope::before{
     content:"";
     position:absolute;
-    top:0;left:0;
-    width:100%;height:100%;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
     background:linear-gradient(135deg,#ffb6c1,#ff6b8a);
     clip-path:polygon(0 0, 100% 0, 50% 60%);
   }
   .envelope::after{
     content:"💖";
     position:absolute;
-    top:60%;left:50%;
+    top:60%;
+    left:50%;
     transform:translate(-50%,-50%);
     font-size:30px;
     text-shadow:0 0 8px rgba(255,107,138,0.6);
@@ -79,202 +83,186 @@
     100%{transform:translate(-50%,-50%) scale(1.15);}
   }
 
-  /* 🎬 Escenas */
-  .scene, .scene-content, .scene-end{
-    text-align:center;
-    z-index:2;
+  /* 💖 Carta */
+  .card{
     position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    transition:opacity 1.2s ease;
-  }
-
-  .scene-content, .scene-end{
-    display:none;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    background:linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,182,193,0.1));
+    border:2px solid rgba(255,182,193,0.4);
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(255,107,138,0.3);
+    width:85%;
+    max-width:420px;
+    text-align:center;
+    padding:40px 30px;
+    z-index:3;
     opacity:0;
+    transition:all 1s ease;
+    backdrop-filter: blur(8px);
   }
-  .scene-content.active, .scene-end.active{
-    display:block;
-    opacity:1;
-  }
+  .card.open{transform:translate(-50%,-50%) scale(1);opacity:1;}
 
-  /* 🌟 Personajes */
-  .characters{
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
-    gap:30px;
-    margin-top:30px;
-  }
-  .characters img{
-    width:140px;
-    height:auto;
-    user-select:none;
-  }
-  .judy{animation: hop 3s infinite ease-in-out;}
-  .nick{animation: sway 4s infinite ease-in-out;}
-  @keyframes hop{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
-  @keyframes sway{0%,100%{transform:rotate(0deg);}50%{transform:rotate(3deg);}}
-
-  /* 💖 Mensaje */
-  .message{
-    margin-top:30px;
-    font-size:17px;
-    max-width:360px;
-    line-height:1.6;
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,182,193,0.4);
-    border-radius:15px;
-    padding:20px;
-    backdrop-filter:blur(10px);
-    box-shadow:0 4px 20px rgba(255,107,138,0.3);
+  h1{
+    font-size:26px;
+    margin:0 0 15px;
+    color:#fff;
     animation: fadeIn 2s ease forwards;
   }
+  p.lead{
+    font-size:17px;
+    opacity:0.95;
+    margin:0 auto;
+    max-width:360px;
+    line-height:1.6;
+    white-space:pre-line;
+    overflow:hidden;
+    text-align:center;
+    animation: fadeIn 3s ease forwards;
+  }
   @keyframes fadeIn{
-    from{opacity:0;transform:translateY(20px);}
+    from{opacity:0;transform:translateY(10px);}
     to{opacity:1;transform:translateY(0);}
   }
 
-  footer{margin-top:15px;font-size:13px;opacity:0.8;}
+  footer{margin-top:15px;font-size:13px;opacity:0.85;}
 
-  /* 💕 Confeti */
-  .emoji-confetti{
+  /* 🎉 Confeti y corazones flotantes */
+  .floating-hearts,.emoji-confetti{
     position:fixed;
     top:0;left:0;width:100%;height:100%;
     overflow:hidden;
     pointer-events:none;
     z-index:1;
   }
+
+  .floating-hearts span{
+    position:absolute;
+    color:#ff6b8a;
+    font-size:20px;
+    animation:floatUp linear forwards;
+    opacity:0.8;
+  }
+
+  @keyframes floatUp{
+    0%{transform:translateY(100vh) scale(0.5) rotate(0deg);opacity:0.8;}
+    100%{transform:translateY(-10vh) scale(1.3) rotate(360deg);opacity:0;}
+  }
+
   .emoji{
     position:absolute;
     animation:fall linear forwards;
-    font-size:24px;
+    font-size:22px;
     user-select:none;
   }
+
   @keyframes fall{
     0%{transform:translateY(-10vh) rotate(0deg);opacity:1;}
     100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
-  }
-
-  /* 🌙 Escena final */
-  .scene-end h2{
-    font-size:32px;
-    margin-bottom:20px;
-    background:linear-gradient(90deg,#ffb6c1,#fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    animation: glow 3s infinite alternate;
-  }
-  @keyframes glow{
-    0%{text-shadow:0 0 10px rgba(255,107,138,0.3);}
-    100%{text-shadow:0 0 25px rgba(255,182,193,0.9);}
-  }
-  .hearts-floating span{
-    position:absolute;
-    font-size:20px;
-    animation:floatUp linear forwards;
-    opacity:0.9;
-  }
-  @keyframes floatUp{
-    0%{transform:translateY(100vh) scale(0.5) rotate(0deg);}
-    100%{transform:translateY(-10vh) scale(1.3) rotate(360deg);opacity:0;}
   }
 </style>
 </head>
 <body>
 
+<!-- ✨ Estrellas -->
 <div class="stars"></div>
+<div class="floating-hearts" id="hearts"></div>
 <div class="emoji-confetti" id="confetti"></div>
 
-<!-- 💌 Escena 1 -->
-<div class="scene" id="scene1">
-  <h1>Bienvenida a Zootopia 💌</h1>
-  <div class="envelope" id="envelope" onclick="openScene2()"></div>
-</div>
+<!-- 💌 Sobre -->
+<div class="envelope" id="envelope" onclick="openLetter()"></div>
 
-<!-- 💖 Escena 2 -->
-<div class="scene-content" id="scene2">
-  <h2>Nick & Judy 💖</h2>
-  <div class="characters">
-    <img src="judy.png" alt="Judy Hopps" class="judy">
-    <img src="nick.png" alt="Nick Wilde" class="nick">
-  </div>
-  <div class="message">
-    <p>
-      Mi princesa, si estuviéramos en Zootopia, correría contigo entre luces y sueños.  
-      Eres mi compañera en cada aventura,  
-      mi paz y mi locura, mi razón para sonreír. 🦊🐰  
-      Que este pequeño mundo te recuerde cuánto te amo 💖  
-    </p>
-  </div>
-  <footer>— Con todo mi amor, <strong>Yisus 💖</strong></footer>
-</div>
-
-<!-- 🌙 Escena 3 -->
-<div class="scene-end" id="scene3">
-  <h2>Para siempre tú y yo 🌙</h2>
-  <div class="characters">
-    <img src="judy.png" alt="Judy Hopps" class="judy">
-    <img src="nick.png" alt="Nick Wilde" class="nick">
-  </div>
+<!-- 💖 Carta -->
+<div class="card" id="card">
+  <h1>Para mi princesa 💌</h1>
+  <p class="lead">
+Mi princesa, solo quiero decirte que me haces muy feliz.  
+Desde que llegaste, todo tiene más sentido y más color.  
+Me encanta hablar contigo, reírme contigo y tenerte cerca.  
+Eres mi persona favorita y te pienso más de lo que imaginas.  
+Gracias por todo lo que haces y por cómo eres conmigo.  
+No necesito nada más que saber que estás bien y que me quieres.  
+Te amo muchísimo, mi princesa, y siempre voy a estar para ti 💖
+  </p>
+  <footer>— Con amor, <strong>Yisus 💖</strong></footer>
 </div>
 
 <!-- 🎶 Música -->
 <audio id="musica" src="musica.mp3" preload="auto"></audio>
+<audio id="finalMusic" src="final.mp3" preload="auto"></audio>
 
 <script>
-  const musica = document.getElementById('musica');
-  const confettiContainer = document.getElementById('confetti');
-  const emojis = ["💖","✨","🥕","🌸","🧡","💞"];
+  const musica=document.getElementById('musica');
+  const finalMusic=document.getElementById('finalMusic');
+  const heartsContainer=document.getElementById('hearts');
+  const confettiContainer=document.getElementById('confetti');
+  const card=document.getElementById('card');
+  const envelope=document.getElementById('envelope');
+  const emojis=["🦖","🐣","🌸","🧸","✨","🩷","💞"];
+  let confettiInterval;
 
-  function openScene2(){
-    document.getElementById('scene1').style.display='none';
-    const s2=document.getElementById('scene2');
-    s2.classList.add('active');
+  function openLetter(){
+    envelope.style.display='none';
+    card.classList.add('open');
     musica.play();
+    lanzarCorazones();
     lanzarConfetti();
-    setInterval(lanzarConfetti, 4000);
-    setTimeout(openScene3, 18000); // pasa a la escena final después de 18s
+    confettiInterval = setInterval(lanzarConfetti, 4000);
+
+    // Cambiar música al final
+    setTimeout(()=>{
+      musica.pause();
+      musica.currentTime = 0;
+      finalMusic.play();
+    }, 23000); // después de ~23 segundos cambia a la música romántica
   }
 
-  function openScene3(){
-    document.getElementById('scene2').style.display='none';
-    const s3=document.getElementById('scene3');
-    s3.classList.add('active');
-    lanzarCorazonesFinal();
+  // 💖 Confeti al tocar la pantalla (pero sin interferir con la carta)
+  document.body.addEventListener("click", (e)=>{
+    if(!e.target.classList.contains('card') && !e.target.classList.contains('envelope')){
+      lanzarConfetti();
+    }
+  });
+
+  function lanzarCorazones(){
+    for(let i=0;i<10;i++){
+      setTimeout(()=>{
+        const heart=document.createElement('span');
+        heart.innerHTML='💗';
+        heart.style.left=Math.random()*100+'vw';
+        heart.style.animationDuration=(4+Math.random()*3)+'s';
+        heartsContainer.appendChild(heart);
+        setTimeout(()=>heart.remove(),7000);
+      },i*150);
+    }
   }
 
+  // 🎊 Confeti solo en los bordes (no sobre la carta)
   function lanzarConfetti(){
     for(let i=0;i<25;i++){
-      setTimeout(()=>{
-        const emoji=document.createElement('div');
-        emoji.classList.add('emoji');
-        emoji.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-        let posX;
-        do { posX = Math.random()*100; } while(posX>35 && posX<65);
-        emoji.style.left=posX+'vw';
-        emoji.style.animationDuration=(3+Math.random()*4)+'s';
-        emoji.style.fontSize=(18+Math.random()*20)+'px';
-        confettiContainer.appendChild(emoji);
-        setTimeout(()=>emoji.remove(),7000);
-      },i*100);
+      crearEmoji(i*80);
     }
   }
 
-  function lanzarCorazonesFinal(){
-    const container=document.createElement('div');
-    container.classList.add('hearts-floating');
-    document.body.appendChild(container);
-    for(let i=0;i<20;i++){
-      const h=document.createElement('span');
-      h.innerText='💖';
-      h.style.left=Math.random()*100+'vw';
-      h.style.animationDuration=(4+Math.random()*3)+'s';
-      container.appendChild(h);
-      setTimeout(()=>h.remove(),7000);
-    }
+  function crearEmoji(delay){
+    setTimeout(()=>{
+      const emoji=document.createElement('div');
+      emoji.classList.add('emoji');
+      emoji.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+
+      // Evita zona central de la carta
+      let posX;
+      do { posX = Math.random() * 100; }
+      while (posX > 35 && posX < 65);
+
+      emoji.style.left = posX + 'vw';
+      emoji.style.animationDuration = (3 + Math.random() * 4) + 's';
+      emoji.style.fontSize = (18 + Math.random() * 20) + 'px';
+      confettiContainer.appendChild(emoji);
+      setTimeout(()=>emoji.remove(),7000);
+    }, delay);
   }
 </script>
-
 </body>
 </html>
