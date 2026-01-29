@@ -13,7 +13,6 @@
   --text:#fff;
 }
 
-/* ===== BASE ===== */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{
   height:100%;
@@ -64,7 +63,7 @@ html,body{
   justify-content:center;
 }
 
-/* ===== SOBRE ANIMADO ===== */
+/* ===== SOBRE ===== */
 .envelope {
   position:fixed;
   left:50%;
@@ -82,7 +81,6 @@ html,body{
   z-index:20;
 }
 
-/* 💫 Sube y se detiene en la parte superior visible */
 @keyframes envelopeIntro {
   0% {opacity:0; top:100%; transform:translateX(-50%) scale(0.9);}
   60% {opacity:1; top:40%; transform:translateX(-50%) scale(1.05);}
@@ -111,7 +109,7 @@ html,body{
   to{transform:translate(-50%,-50%) scale(1.2);}
 }
 
-/* ✨ AURA MÁGICA GIRATORIA */
+/* ✨ Efectos */
 .magic-glow {
   position:absolute;
   top:50%;
@@ -130,7 +128,6 @@ html,body{
   to{transform:translate(-50%,-50%) rotate(360deg);}
 }
 
-/* Apertura del sobre */
 .envelope.open {
   animation:openEnvelope 1s forwards ease-in-out;
 }
@@ -140,7 +137,7 @@ html,body{
   100% {top:-20vh; transform:translateX(-50%) scale(0.8); opacity:0;}
 }
 
-/* ✨ Efecto de brillo mágico */
+/* ✨ Brillo mágico */
 .sparkle {
   position:fixed;
   top:0;left:0;width:100%;height:100%;
@@ -197,12 +194,13 @@ html,body{
 /* ===== PERSONAJES ===== */
 .characters{
   display:flex;
-  justify-content:center;
+  justify-content:flex-start; /* 👈 ligeramente a la izquierda */
   align-items:flex-end;
   gap:25px;
   margin-top:25px;
   flex-wrap:nowrap;
   position:relative;
+  transform:translateX(8%); /* mueve todo 8% a la izquierda */
 }
 .character{
   height:220px;
@@ -234,49 +232,22 @@ html,body{
   transition:transform .25s;
 }
 .btn:hover{transform:scale(1.05);}
-
-/* ===== CONFETTI ===== */
-.confetti {
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  overflow:hidden;pointer-events:none;z-index:5;
-}
-.emoji {
-  position:absolute;font-size:22px;animation:fall linear forwards;user-select:none;
-}
-@keyframes fall {
-  0% { transform:translateY(-10vh) rotate(0deg); opacity:1; }
-  100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width:600px) {
-  .characters {gap:10px;}
-  .character {height:160px;}
-  .card { max-width:90%; padding:25px 18px; }
-  h1 { font-size:20px; }
-  p { font-size:14.5px; }
-}
 </style>
 </head>
 <body>
 
-<!-- ===== FONDOS ===== -->
 <div class="bg show" id="bg1" style="background-image:url('fondo1.jpg')"></div>
 <div class="bg" id="bg2" style="background-image:url('fondo2.jpg')"></div>
 <div class="bg" id="bg3" style="background-image:url('fondo3.jpg')"></div>
 <div class="overlay"></div>
 
-<div class="confetti" id="confetti"></div>
-
 <div class="stage">
-  <!-- ESCENA 1 -->
   <div id="scene1">
     <div class="envelope" id="envelope" onclick="openEnvelope()">
       <div class="magic-glow"></div>
     </div>
   </div>
 
-  <!-- ESCENA 2 -->
   <div id="scene2" style="display:none;">
     <div class="card" id="card1">
       <h1>En la ciudad de Zootopia 🌆</h1>
@@ -294,7 +265,6 @@ como tú y yo 💞</p>
     </div>
   </div>
 
-  <!-- ESCENA 3 -->
   <div id="scene3" style="display:none;">
     <div class="card show">
       <h1>Gracias por ser mi Zootopia 💫</h1>
@@ -307,13 +277,10 @@ Te amo con todo mi corazón 💖</p>
   </div>
 </div>
 
-<!-- 🎶 MÚSICA -->
 <audio id="musica" src="musica.mp3" preload="auto" loop></audio>
 
 <script>
 const musica=document.getElementById("musica");
-const confettiContainer=document.getElementById("confetti");
-let confettiInterval;
 
 function openEnvelope(){
   const envelope=document.getElementById("envelope");
@@ -340,9 +307,6 @@ function openEnvelope(){
       document.getElementById("nick").classList.add("show");
       document.getElementById("judy").classList.add("show");
     },400);
-    
-    lanzarConfetti();
-    confettiInterval=setInterval(lanzarConfetti,4000);
   },900);
 }
 
@@ -351,11 +315,9 @@ function nextScene(){
   document.getElementById("scene3").style.display="flex";
   document.getElementById("bg2").classList.remove("show");
   document.getElementById("bg3").classList.add("show");
-  lanzarConfetti();
 }
 
 function restart(){
-  clearInterval(confettiInterval);
   document.getElementById("scene3").style.display="none";
   document.getElementById("scene2").style.display="none";
   document.getElementById("scene1").style.display="block";
@@ -369,23 +331,6 @@ function restart(){
   envelope.style.animation="none";
   void envelope.offsetWidth;
   envelope.style.animation="envelopeIntro 3s ease forwards";
-}
-
-function lanzarConfetti(){
-  const emojis=["🌸","✨","💞","🦖","🧸","💗","🌷","⭐"];
-  for(let i=0;i<25;i++){
-    setTimeout(()=>{
-      const e=document.createElement("div");
-      e.classList.add("emoji");
-      e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
-      let x;do{x=Math.random()*100;}while(x>40&&x<60);
-      e.style.left=x+"vw";
-      e.style.animationDuration=(3+Math.random()*3)+"s";
-      e.style.fontSize=(18+Math.random()*24)+"px";
-      confettiContainer.appendChild(e);
-      setTimeout(()=>e.remove(),6000);
-    },i*70);
-  }
 }
 </script>
 </body>
