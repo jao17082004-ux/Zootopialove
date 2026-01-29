@@ -3,23 +3,26 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Zootopia — Nuestra Historia 💖</title>
+<title>Zootopia — Nuestra Historia 💞</title>
 <style>
 :root {
-  --text: #fff;
-  --accent: #ff6b8a;
-  --shadow: rgba(0, 0, 0, 0.5);
-  --glow: rgba(255, 107, 138, 0.6);
+  --bg:#0c0619;
+  --accent:#ff6b8a;
+  --accent2:#a96bff;
+  --gold:#ffd6a5;
+  --text:#fff;
+  --shadow:rgba(0,0,0,0.6);
 }
 
 /* ===== BASE ===== */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{
-  width:100%;height:100%;
-  overflow:hidden;
-  background:#0f1226;
-  font-family:"Poppins",sans-serif;
+  height:100%;
+  width:100%;
+  background:var(--bg);
   color:var(--text);
+  font-family:"Poppins",sans-serif;
+  overflow:hidden;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -29,32 +32,158 @@ html,body{
 .bg{
   position:fixed;
   inset:0;
-  background-position:center center;
   background-size:cover;
-  background-repeat:no-repeat;
+  background-position:center;
+  filter:brightness(1.05) contrast(1.1) saturate(1.1);
   opacity:0;
-  transition:opacity 1.3s ease;
+  transition:opacity 1.2s ease;
   z-index:0;
-  filter:brightness(1.05) contrast(1.08) saturate(1.1);
 }
-.bg.show{
-  opacity:1;
-  animation:slowPan 25s ease-in-out infinite;
-}
-@keyframes slowPan{
-  0%{background-position:center;}
-  50%{background-position:center top;}
-  100%{background-position:center;}
+.bg.show{opacity:1;animation:slowZoom 40s ease-in-out infinite alternate;}
+@keyframes slowZoom{
+  0%{transform:scale(1);}
+  100%{transform:scale(1.08);}
 }
 
 .overlay{
   position:fixed;
   inset:0;
-  background:radial-gradient(circle at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.6) 100%);
+  background:radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
   z-index:1;
 }
 
-/* ===== CONFETTI & HEARTS ===== */
+/* ===== ESCENAS ===== */
+.stage{
+  position:relative;
+  z-index:10;
+  width:100%;
+  max-width:900px;
+  padding:20px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ===== SOBRE ANIMADO ===== */
+.envelope {
+  position:relative;
+  width:250px;
+  height:170px;
+  background:linear-gradient(145deg,#b57aff,#ff82b5);
+  border-radius:14px;
+  box-shadow:0 0 35px rgba(255,107,255,0.35), inset 0 0 15px rgba(255,255,255,0.15);
+  overflow:hidden;
+  cursor:pointer;
+  transform-style:preserve-3d;
+  transition:transform 1s ease;
+}
+.envelope:hover {transform:scale(1.05);}
+.envelope::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  background:linear-gradient(135deg,#ffd6a5,#ff9ec4);
+}
+.envelope::after{
+  content:"💌";
+  position:absolute;
+  top:58%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:42px;
+  animation:beat 1.2s infinite alternate;
+  filter:drop-shadow(0 0 10px #ffd6a5);
+}
+@keyframes beat{from{transform:translate(-50%,-50%) scale(0.9);}to{transform:translate(-50%,-50%) scale(1.2);}}
+
+/* Apertura del sobre */
+.envelope.open {
+  animation:openEnvelope 1.2s forwards ease-in-out;
+}
+@keyframes openEnvelope {
+  0% {transform:rotateX(0deg);}
+  50% {transform:rotateX(40deg);}
+  100% {transform:rotateX(0deg) translateY(-220px) scale(0.8);}
+}
+
+/* ===== CARTA ===== */
+.card {
+  background:linear-gradient(145deg, rgba(255,255,255,0.15), rgba(171,140,255,0.1));
+  border:1.5px solid rgba(255,182,255,0.5);
+  border-radius:24px;
+  backdrop-filter:blur(14px);
+  box-shadow:0 0 25px rgba(255,107,255,0.3);
+  padding:40px 35px;
+  max-width:460px;
+  opacity:0;
+  transform:translateY(30px) scale(0.9);
+  transition:opacity 1.3s ease, transform 1.3s ease;
+}
+.card.show {
+  opacity:1;
+  transform:translateY(0) scale(1);
+  animation:cardGlow 4s ease-in-out infinite alternate;
+}
+@keyframes cardGlow{
+  0%{box-shadow:0 0 25px rgba(255,107,255,0.3);}
+  100%{box-shadow:0 0 35px rgba(255,182,255,0.5);}
+}
+.card h1{
+  font-size:26px;
+  color:#ffd6ff;
+  text-shadow:0 0 10px rgba(255,182,255,0.5);
+  margin-bottom:15px;
+}
+.card p{
+  font-size:17px;
+  line-height:1.6;
+  white-space:pre-line;
+  opacity:0.95;
+}
+
+/* ===== PERSONAJES ===== */
+.characters{
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  gap:12px;
+  margin-top:25px;
+  flex-wrap:wrap;
+  position:relative;
+}
+.character{
+  height:250px;
+  width:auto;
+  opacity:0;
+  object-fit:contain;
+  transition:all 1.5s ease;
+  animation:floaty 6s ease-in-out infinite;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5)) brightness(1.05);
+}
+#nick{transform:translateX(-150%) translateY(10px);}
+#judy{transform:translateX(150%);}
+.character.show{opacity:1;transform:translateX(0) translateY(0);}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+/* ===== BOTÓN ===== */
+.btn{
+  display:inline-block;
+  background:linear-gradient(90deg,#a96bff,#ff6b8a);
+  color:#fff;
+  padding:10px 24px;
+  border-radius:999px;
+  margin-top:25px;
+  text-decoration:none;
+  font-weight:600;
+  box-shadow:0 6px 20px rgba(255,107,255,0.3);
+  transition:transform .25s;
+}
+.btn:hover{transform:scale(1.05);}
+
+/* ===== CONFETTI ===== */
 .confetti, .hearts {
   position:fixed;top:0;left:0;width:100%;height:100%;
   overflow:hidden;pointer-events:none;z-index:5;
@@ -65,159 +194,6 @@ html,body{
 @keyframes fall {
   0% { transform:translateY(-10vh) rotate(0deg); opacity:1; }
   100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
-}
-
-/* ===== ESCENAS ===== */
-.stage{
-  position:relative;
-  z-index:10;
-  text-align:center;
-  width:100%;
-  max-width:900px;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-
-/* ===== SOBRE MEJORADO ===== */
-.envelope {
-  width:240px;
-  height:160px;
-  position:relative;
-  background:linear-gradient(145deg, #ff9ec4, #ff6b8a);
-  border-radius:12px;
-  box-shadow:0 0 25px rgba(255,107,138,0.4), inset 0 0 12px rgba(255,255,255,0.2);
-  overflow:hidden;
-  cursor:pointer;
-  transition:transform .4s ease, box-shadow .4s ease;
-}
-.envelope:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 35px rgba(255,107,138,0.6), inset 0 0 18px rgba(255,255,255,0.3);
-}
-.envelope::before {
-  content:"";
-  position:absolute;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
-  clip-path:polygon(0 0, 100% 0, 50% 55%);
-  border-radius:12px 12px 0 0;
-}
-.envelope::after {
-  content:"💌";
-  position:absolute;
-  top:58%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:38px;
-  filter:drop-shadow(0 0 10px var(--glow));
-  animation:beat 1.3s infinite ease-in-out alternate;
-}
-@keyframes beat {
-  from { transform:translate(-50%,-50%) scale(0.9); }
-  to { transform:translate(-50%,-50%) scale(1.2); }
-}
-
-/* ===== CARTA MEJORADA ===== */
-.card {
-  background:linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,182,193,0.1));
-  border:1.5px solid rgba(255,182,193,0.4);
-  border-radius:24px;
-  padding:40px 30px;
-  backdrop-filter:blur(12px);
-  box-shadow:
-    0 0 25px rgba(255,107,138,0.35),
-    inset 0 0 20px rgba(255,182,193,0.15);
-  max-width:440px;
-  margin:auto;
-  opacity:0;
-  transform:scale(0.9);
-  transition:opacity 1s ease,transform 1s ease;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-}
-.card::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:24px;
-  box-shadow:0 0 20px rgba(255,182,193,0.3);
-  pointer-events:none;
-}
-.card.show {
-  opacity:1;
-  transform:scale(1);
-}
-h1 {
-  font-size:26px;
-  margin-bottom:14px;
-  text-shadow:0 2px 8px var(--shadow);
-  color:#fff;
-}
-p {
-  font-size:17px;
-  line-height:1.6;
-  text-align:center;
-  white-space:pre-line;
-  opacity:0.95;
-}
-
-/* ===== PERSONAJES ===== */
-.characters {
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
-  gap:10px;
-  margin-top:25px;
-  flex-wrap:wrap;
-  position:relative;
-}
-
-.character {
-  height:250px;
-  width:auto;
-  opacity:0;
-  object-fit:contain;
-  filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5)) brightness(1.05);
-  transition:all 1.5s ease;
-  animation:floaty 6s ease-in-out infinite;
-}
-#nick { transform:translateX(-120%) translateY(10px); }
-#judy { transform:translateX(120%); }
-.character.show { opacity:1; transform:translateX(0) translateY(0); }
-
-@keyframes floaty {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(-8px); }
-}
-
-/* ===== BOTÓN ===== */
-.btn {
-  display:inline-block;
-  background:linear-gradient(90deg,#ff8fb5,#ff6b8a);
-  color:#fff;
-  padding:10px 22px;
-  border-radius:999px;
-  margin-top:20px;
-  text-decoration:none;
-  font-weight:600;
-  box-shadow:0 6px 18px rgba(255,107,138,0.3);
-  transition:transform 0.25s;
-}
-.btn:hover {transform:scale(1.05);}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width:600px) {
-  .card { max-width:85%; padding:25px 20px; }
-  h1 { font-size:22px; }
-  p { font-size:15px; }
-  .character { height:180px; }
 }
 </style>
 </head>
@@ -233,87 +209,90 @@ p {
 <div class="hearts" id="hearts"></div>
 
 <div class="stage">
-  <!-- SCENE 1 -->
+  <!-- ESCENA 1 -->
   <div id="scene1">
-    <div class="envelope" onclick="startScene2()"></div>
+    <div class="envelope" id="envelope" onclick="openEnvelope()"></div>
   </div>
 
-  <!-- SCENE 2 -->
+  <!-- ESCENA 2 -->
   <div id="scene2" style="display:none;">
-    <div class="card show">
-      <h1>En la ciudad de Zootopia...</h1>
-      <p>dos almas se cruzaron y, sin saberlo,  
-empezaron a escribir su propia historia.  
-Juntos aprendieron que el amor rompe todas las reglas 🦊🐰</p>
-
+    <div class="card" id="card1">
+      <h1>En la ciudad de Zootopia 🌆</h1>
+      <p>dos almas se cruzaron,  
+y sin saberlo, comenzaron su aventura.  
+Nick y Judy, tan distintos pero tan iguales,  
+como tú y yo 💞</p>
       <div class="characters">
         <img src="nick.png" id="nick" class="character" alt="Nick Wilde">
         <img src="judy.png" id="judy" class="character" alt="Judy Hopps">
       </div>
-
-      <a class="btn" href="#" onclick="startScene3()">Continuar ➜</a>
+      <a href="#" class="btn" onclick="nextScene()">Continuar ➜</a>
     </div>
   </div>
 
-  <!-- SCENE 3 -->
+  <!-- ESCENA 3 -->
   <div id="scene3" style="display:none;">
     <div class="card show">
-      <h1>Gracias por ser mi Zootopia 🌙</h1>
-      <p>Tu amor es mi aventura favorita,  
-mi calma, mi locura y mi hogar.  
+      <h1>Gracias por ser mi Zootopia 💫</h1>
+      <p>Contigo todo tiene sentido,  
+mi mundo brilla un poco más.  
+Eres mi calma, mi locura, mi hogar.  
 Te amo con todo mi corazón 💖</p>
-      <a class="btn" href="#" onclick="replay()">Volver a empezar</a>
+      <a href="#" class="btn" onclick="restart()">Volver a empezar</a>
     </div>
   </div>
 </div>
 
-<!-- 🎵 Música -->
+<!-- 🎶 MÚSICA -->
 <audio id="musica" src="musica.mp3" preload="auto" loop></audio>
 
 <script>
 const musica=document.getElementById("musica");
 const confettiContainer=document.getElementById("confetti");
-const heartsContainer=document.getElementById("hearts");
 let confettiInterval;
 
-function startScene2(){
-  musica.currentTime=0;
+function openEnvelope(){
+  const envelope=document.getElementById("envelope");
+  envelope.classList.add("open");
   musica.play().catch(()=>{
     document.body.addEventListener('touchstart',()=>musica.play(),{once:true});
   });
-  document.getElementById("bg1").classList.remove("show");
-  document.getElementById("bg2").classList.add("show");
-  document.getElementById("scene1").style.display="none";
-  document.getElementById("scene2").style.display="block";
 
   setTimeout(()=>{
-    document.getElementById("nick").classList.add("show");
-    document.getElementById("judy").classList.add("show");
-  },500);
-
-  lanzarConfetti();
-  confettiInterval=setInterval(lanzarConfetti,4000);
+    document.getElementById("scene1").style.display="none";
+    document.getElementById("scene2").style.display="block";
+    document.getElementById("bg1").classList.remove("show");
+    document.getElementById("bg2").classList.add("show");
+    const card=document.getElementById("card1");
+    setTimeout(()=>card.classList.add("show"),200);
+    setTimeout(()=>{
+      document.getElementById("nick").classList.add("show");
+      document.getElementById("judy").classList.add("show");
+    },1000);
+    lanzarConfetti();
+    confettiInterval=setInterval(lanzarConfetti,4000);
+  },1200);
 }
 
-function startScene3(){
-  document.getElementById("bg2").classList.remove("show");
-  document.getElementById("bg3").classList.add("show");
+function nextScene(){
   document.getElementById("scene2").style.display="none";
   document.getElementById("scene3").style.display="block";
-  lanzarCorazones();
+  document.getElementById("bg2").classList.remove("show");
+  document.getElementById("bg3").classList.add("show");
+  lanzarConfetti();
 }
 
-function replay(){
-  document.getElementById("bg3").classList.remove("show");
-  document.getElementById("bg1").classList.add("show");
+function restart(){
+  clearInterval(confettiInterval);
   document.getElementById("scene3").style.display="none";
   document.getElementById("scene1").style.display="block";
-  clearInterval(confettiInterval);
+  document.getElementById("bg3").classList.remove("show");
+  document.getElementById("bg1").classList.add("show");
 }
 
 function lanzarConfetti(){
-  const emojis=["🌸","✨","💞","🦖","🧸","💗"];
-  for(let i=0;i<20;i++){
+  const emojis=["🌸","✨","💞","🦖","🧸","💗","🌷","⭐"];
+  for(let i=0;i<25;i++){
     setTimeout(()=>{
       const e=document.createElement("div");
       e.classList.add("emoji");
@@ -321,25 +300,10 @@ function lanzarConfetti(){
       let x;do{x=Math.random()*100;}while(x>40&&x<60);
       e.style.left=x+"vw";
       e.style.animationDuration=(3+Math.random()*3)+"s";
-      e.style.fontSize=(16+Math.random()*20)+"px";
+      e.style.fontSize=(18+Math.random()*24)+"px";
       confettiContainer.appendChild(e);
       setTimeout(()=>e.remove(),6000);
-    },i*80);
-  }
-}
-
-function lanzarCorazones(){
-  for(let i=0;i<20;i++){
-    setTimeout(()=>{
-      const h=document.createElement("span");
-      h.innerText="💗";
-      h.style.position="absolute";
-      h.style.left=Math.random()*100+"vw";
-      h.style.fontSize=(16+Math.random()*20)+"px";
-      h.style.animation=`floatUp ${3+Math.random()*3}s linear forwards`;
-      heartsContainer.appendChild(h);
-      setTimeout(()=>h.remove(),6000);
-    },i*100);
+    },i*70);
   }
 }
 </script>
