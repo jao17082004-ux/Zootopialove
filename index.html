@@ -80,7 +80,15 @@ html,body{
   transform-style:preserve-3d;
   transition:transform 1s ease;
   margin:auto;
+  opacity:0;
+  animation:envelopeIntro 1.6s ease forwards;
 }
+@keyframes envelopeIntro {
+  0% {opacity:0; transform:translateY(120px) scale(0.8);}
+  60% {opacity:1; transform:translateY(-10px) scale(1.05);}
+  100% {opacity:1; transform:translateY(0) scale(1);}
+}
+
 .envelope:hover {transform:scale(1.05);}
 .envelope::before{
   content:"";
@@ -303,17 +311,14 @@ function restart(){
   document.getElementById("bg3").classList.remove("show");
   document.getElementById("bg1").classList.add("show");
 
-  // 💖 Restaurar el sobre
+  // 💖 Restaurar sobre y reiniciar animación
   const envelope=document.getElementById("envelope");
   envelope.classList.remove("open");
-  envelope.style.transform="translateY(50px) scale(0.8)";
-  setTimeout(()=>{
-    envelope.style.transition="transform 0.8s ease";
-    envelope.style.transform="translateY(0) scale(1)";
-    setTimeout(()=>envelope.style.transition="",800);
-  },100);
+  envelope.style.opacity="0";
+  envelope.style.animation="none";
+  void envelope.offsetWidth; // reiniciar animación
+  envelope.style.animation="envelopeIntro 1.6s ease forwards";
 }
-
 function lanzarConfetti(){
   const emojis=["🌸","✨","💞","🦖","🧸","💗","🌷","⭐"];
   for(let i=0;i<25;i++){
