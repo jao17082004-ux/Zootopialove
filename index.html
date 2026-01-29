@@ -79,12 +79,14 @@ html,body{
   transition:transform 1s ease;
   margin:auto;
   opacity:0;
-  animation:envelopeIntro 2.2s ease forwards;
+  animation:envelopeIntro 2.5s ease forwards;
 }
+
+/* 💫 Ajuste: se queda más arriba pero visible completo */
 @keyframes envelopeIntro {
   0% {opacity:0; transform:translateY(180px) scale(0.85);}
-  70% {opacity:1; transform:translateY(-10px) scale(1.05);}
-  100% {opacity:1; transform:translateY(-60px) scale(1);}
+  70% {opacity:1; transform:translateY(0px) scale(1.05);}
+  100% {opacity:1; transform:translateY(-30px) scale(1);}
 }
 
 .envelope:hover {transform:scale(1.05);}
@@ -105,19 +107,22 @@ html,body{
   animation:beat 1.2s infinite alternate;
   filter:drop-shadow(0 0 10px #ffd6a5);
 }
-@keyframes beat{from{transform:translate(-50%,-50%) scale(0.9);}to{transform:translate(-50%,-50%) scale(1.2);}}
+@keyframes beat{
+  from{transform:translate(-50%,-50%) scale(0.9);}
+  to{transform:translate(-50%,-50%) scale(1.2);}
+}
 
 /* ✨ AURA MÁGICA GIRATORIA */
 .magic-glow {
   position:absolute;
   top:50%;
   left:50%;
-  width:300px;
-  height:300px;
+  width:320px;
+  height:320px;
   transform:translate(-50%,-50%);
   border-radius:50%;
-  background:conic-gradient(from 0deg, rgba(255,214,165,0.2), rgba(255,107,138,0.4), rgba(169,107,255,0.2), rgba(255,214,165,0.2));
-  filter:blur(25px);
+  background:conic-gradient(from 0deg, rgba(255,214,165,0.25), rgba(255,107,138,0.4), rgba(169,107,255,0.3), rgba(255,214,165,0.25));
+  filter:blur(28px);
   animation:rotateGlow 6s linear infinite;
   z-index:-1;
 }
@@ -131,9 +136,9 @@ html,body{
   animation:openEnvelope 1.2s forwards ease-in-out;
 }
 @keyframes openEnvelope {
-  0% {transform:rotateX(0deg) translateY(-60px);}
-  50% {transform:rotateX(40deg) translateY(-40px);}
-  100% {transform:translateY(-200px) scale(0.8);}
+  0% {transform:translateY(-30px) rotateX(0deg);}
+  50% {transform:translateY(-20px) rotateX(40deg);}
+  100% {transform:translateY(-160px) scale(0.85);}
 }
 
 /* ===== CARTA ===== */
@@ -215,7 +220,7 @@ html,body{
 .btn:hover{transform:scale(1.05);}
 
 /* ===== CONFETTI ===== */
-.confetti, .hearts {
+.confetti {
   position:fixed;top:0;left:0;width:100%;height:100%;
   overflow:hidden;pointer-events:none;z-index:5;
 }
@@ -329,14 +334,15 @@ function restart(){
   document.getElementById("bg3").classList.remove("show");
   document.getElementById("bg1").classList.add("show");
 
-  // 💖 Restaurar sobre y reiniciar animación
+  // 💖 Reiniciar animación
   const envelope=document.getElementById("envelope");
   envelope.classList.remove("open");
   envelope.style.opacity="0";
   envelope.style.animation="none";
-  void envelope.offsetWidth; // reinicia animación
-  envelope.style.animation="envelopeIntro 2.2s ease forwards";
+  void envelope.offsetWidth;
+  envelope.style.animation="envelopeIntro 2.5s ease forwards";
 }
+
 function lanzarConfetti(){
   const emojis=["🌸","✨","💞","🦖","🧸","💗","🌷","⭐"];
   for(let i=0;i<25;i++){
