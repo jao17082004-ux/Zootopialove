@@ -62,15 +62,14 @@ html,body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  overflow:visible; /* ✅ importante: evita recorte */
 }
 
 /* ===== SOBRE ANIMADO ===== */
 .envelope {
-  position:absolute; /* ✅ cambio: controla posición exacta */
+  position:fixed; /* ✅ siempre visible */
   left:50%;
-  transform:translateX(-50%) translateY(120%); /* inicia fuera de pantalla */
-  bottom:auto;
+  top:100%; /* empieza fuera de pantalla */
+  transform:translateX(-50%);
   width:250px;
   height:170px;
   background:linear-gradient(145deg,#b57aff,#ff82b5);
@@ -78,20 +77,18 @@ html,body{
   box-shadow:0 0 35px rgba(255,107,255,0.35), inset 0 0 15px rgba(255,255,255,0.15);
   overflow:hidden;
   cursor:pointer;
-  transform-style:preserve-3d;
-  transition:transform 1s ease;
   opacity:0;
-  animation:envelopeIntro 2.5s ease forwards;
+  animation:envelopeIntro 3s ease forwards;
+  z-index:20;
 }
 
-/* 💫 Nueva animación: sube y se queda visible completa */
+/* 💫 Sube y se detiene en la parte superior visible */
 @keyframes envelopeIntro {
-  0% {opacity:0; transform:translateX(-50%) translateY(120%) scale(0.9);}
-  70% {opacity:1; transform:translateX(-50%) translateY(0%) scale(1.05);}
-  100% {opacity:1; transform:translateX(-50%) translateY(-100px) scale(1);}
+  0% {opacity:0; top:100%; transform:translateX(-50%) scale(0.9);}
+  60% {opacity:1; top:40%; transform:translateX(-50%) scale(1.05);}
+  100% {opacity:1; top:10vh; transform:translateX(-50%) scale(1);}
 }
 
-.envelope:hover {transform:translateX(-50%) translateY(-100px) scale(1.05);}
 .envelope::before{
   content:"";
   position:absolute;
@@ -135,12 +132,12 @@ html,body{
 
 /* Apertura del sobre */
 .envelope.open {
-  animation:openEnvelope 1.2s forwards ease-in-out;
+  animation:openEnvelope 1.5s forwards ease-in-out;
 }
 @keyframes openEnvelope {
-  0% {transform:translateX(-50%) translateY(-100px) rotateX(0deg);}
-  50% {transform:translateX(-50%) translateY(-80px) rotateX(40deg);}
-  100% {transform:translateX(-50%) translateY(-220px) scale(0.85);}
+  0% {top:10vh; transform:translateX(-50%) rotateX(0deg);}
+  50% {top:8vh; transform:translateX(-50%) rotateX(40deg);}
+  100% {top:-10vh; transform:translateX(-50%) scale(0.85);}
 }
 
 /* ===== CARTA ===== */
@@ -306,7 +303,7 @@ function openEnvelope(){
   });
 
   setTimeout(()=>{
-    document.getElementById("scene1").style.display="none";
+    envelope.style.display="none";
     document.getElementById("scene2").style.display="flex";
     document.getElementById("bg1").classList.remove("show");
     document.getElementById("bg2").classList.add("show");
@@ -318,7 +315,7 @@ function openEnvelope(){
     },800);
     lanzarConfetti();
     confettiInterval=setInterval(lanzarConfetti,4000);
-  },1200);
+  },1500);
 }
 
 function nextScene(){
@@ -332,16 +329,18 @@ function nextScene(){
 function restart(){
   clearInterval(confettiInterval);
   document.getElementById("scene3").style.display="none";
+  document.getElementById("scene2").style.display="none";
   document.getElementById("scene1").style.display="block";
   document.getElementById("bg3").classList.remove("show");
   document.getElementById("bg1").classList.add("show");
 
   const envelope=document.getElementById("envelope");
+  envelope.style.display="block";
   envelope.classList.remove("open");
   envelope.style.opacity="0";
   envelope.style.animation="none";
   void envelope.offsetWidth;
-  envelope.style.animation="envelopeIntro 2.5s ease forwards";
+  envelope.style.animation="envelopeIntro 3s ease forwards";
 }
 
 function lanzarConfetti(){
