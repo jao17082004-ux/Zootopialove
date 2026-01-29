@@ -118,8 +118,8 @@ p{font-size:17px;line-height:1.6;white-space:pre-line;}
   transition:transform 1.5s ease;
 }
 #nick{
-  width:300px;
-  opacity:0.95;
+  width:500px;
+  opacity:0.99;
 }
 #judy{
   width:300px;
@@ -163,8 +163,8 @@ p{font-size:17px;line-height:1.6;white-space:pre-line;}
   <div id="scene2" style="display:none;">
     <div class="card show">
       <h1>En la ciudad de Zootopia...</h1>
-      <p>dos almas se cruzaron y, sin saberlo,  
-empezaron a escribir su propia historia.  
+      <p>Dos almas se cruzaron y, sin saberlo,  
+        empezaron a escribir su propia historia.  
 Juntos aprendieron que el amor rompe todas las reglas 🦊🐰</p>
       <div class="characters">
         <img src="nick.png" id="nick" class="character" alt="Nick Wilde">
@@ -177,10 +177,10 @@ Juntos aprendieron que el amor rompe todas las reglas 🦊🐰</p>
   <!-- Escena 3 -->
   <div id="scene3" style="display:none;">
     <div class="card show">
-      <h1>Gracias por ser mi Zootopia 🌙</h1>
+      <h1>Gracias por ser parte de mi Zootopia 🌙</h1>
       <p>Tu amor es mi aventura favorita,  
-mi calma, mi locura y mi hogar.  
-Te amo con todo mi corazón 💖</p>
+        mi calma, mi locura y mi hogar.  
+        Te amo con todo mi corazón 💖</p>
       <a class="btn" href="#" onclick="replay()">Volver a empezar</a>
     </div>
   </div>
@@ -227,7 +227,7 @@ function replay(){
 }
 
 function lanzarConfetti(){
-  const emojis = ["🌸","✨","💞","🦖","🧸","💗"];
+  const emojis = ["🌸","✨","🦖","🧸","💗"];
   for(let i=0;i<25;i++){
     setTimeout(()=>{
       const e=document.createElement("div");
@@ -260,3 +260,4 @@ function lanzarCorazones(){
 </script>
 </body>
 </html>
+
