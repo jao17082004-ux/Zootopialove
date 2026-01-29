@@ -9,6 +9,7 @@
   --text: #fff;
   --accent: #ff6b8a;
   --shadow: rgba(0, 0, 0, 0.5);
+  --glow: rgba(255, 107, 138, 0.6);
 }
 
 /* ===== BASE ===== */
@@ -34,7 +35,7 @@ html,body{
   opacity:0;
   transition:opacity 1.3s ease;
   z-index:0;
-  filter:brightness(1.03) contrast(1.05) saturate(1.1);
+  filter:brightness(1.05) contrast(1.08) saturate(1.1);
 }
 .bg.show{
   opacity:1;
@@ -80,48 +81,57 @@ html,body{
   justify-content:center;
 }
 
-/* ===== SOBRE ===== */
+/* ===== SOBRE MEJORADO ===== */
 .envelope {
-  width:220px;
-  height:150px;
-  background:linear-gradient(180deg,#ff8fb5,#ff6b8a);
-  border-radius:12px;
-  box-shadow:0 8px 25px var(--shadow);
+  width:240px;
+  height:160px;
   position:relative;
+  background:linear-gradient(145deg, #ff9ec4, #ff6b8a);
+  border-radius:12px;
+  box-shadow:0 0 25px rgba(255,107,138,0.4), inset 0 0 12px rgba(255,255,255,0.2);
+  overflow:hidden;
   cursor:pointer;
-  transition:transform .3s ease;
+  transition:transform .4s ease, box-shadow .4s ease;
 }
-.envelope:hover{transform:scale(1.05);}
+.envelope:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 35px rgba(255,107,138,0.6), inset 0 0 18px rgba(255,255,255,0.3);
+}
 .envelope::before {
   content:"";
   position:absolute;
-  inset:0;
-  clip-path:polygon(0 0,100% 0,50% 60%);
-  background:linear-gradient(135deg,#ffc1d2,#ff6b8a);
+  top:0; left:0;
+  width:100%; height:100%;
+  background:linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
+  clip-path:polygon(0 0, 100% 0, 50% 55%);
+  border-radius:12px 12px 0 0;
 }
 .envelope::after {
-  content:"💖";
+  content:"💌";
   position:absolute;
-  top:60%;
+  top:58%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:34px;
-  animation:beat 1.4s infinite alternate;
+  font-size:38px;
+  filter:drop-shadow(0 0 10px var(--glow));
+  animation:beat 1.3s infinite ease-in-out alternate;
 }
 @keyframes beat {
   from { transform:translate(-50%,-50%) scale(0.9); }
   to { transform:translate(-50%,-50%) scale(1.2); }
 }
 
-/* ===== CARTA ===== */
+/* ===== CARTA MEJORADA ===== */
 .card {
-  background:rgba(255,255,255,0.1);
-  border:1px solid rgba(255,182,193,0.3);
-  border-radius:20px;
-  padding:30px 25px;
-  backdrop-filter:blur(8px);
-  box-shadow:0 8px 25px rgba(0,0,0,0.4);
-  max-width:420px;
+  background:linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,182,193,0.1));
+  border:1.5px solid rgba(255,182,193,0.4);
+  border-radius:24px;
+  padding:40px 30px;
+  backdrop-filter:blur(12px);
+  box-shadow:
+    0 0 25px rgba(255,107,138,0.35),
+    inset 0 0 20px rgba(255,182,193,0.15);
+  max-width:440px;
   margin:auto;
   opacity:0;
   transform:scale(0.9);
@@ -130,17 +140,32 @@ html,body{
   flex-direction:column;
   align-items:center;
   justify-content:center;
+  position:relative;
 }
-.card.show {opacity:1;transform:scale(1);}
+.card::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  box-shadow:0 0 20px rgba(255,182,193,0.3);
+  pointer-events:none;
+}
+.card.show {
+  opacity:1;
+  transform:scale(1);
+}
 h1 {
-  font-size:24px;
-  margin-bottom:12px;
-  text-shadow:0 2px 6px var(--shadow);
+  font-size:26px;
+  margin-bottom:14px;
+  text-shadow:0 2px 8px var(--shadow);
+  color:#fff;
 }
 p {
-  font-size:16px;
+  font-size:17px;
   line-height:1.6;
+  text-align:center;
   white-space:pre-line;
+  opacity:0.95;
 }
 
 /* ===== PERSONAJES ===== */
@@ -154,37 +179,22 @@ p {
   position:relative;
 }
 
-/* Animación de entrada */
 .character {
   height:250px;
   width:auto;
   opacity:0;
   object-fit:contain;
-  filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5))
-          brightness(1.05)
-          contrast(1.05);
-  animation:floaty 6s ease-in-out infinite;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5)) brightness(1.05);
   transition:all 1.5s ease;
+  animation:floaty 6s ease-in-out infinite;
 }
-.character.show {
-  opacity:1;
-}
-#nick {
-  transform:translateX(-120%) translateY(10px);
-}
-#judy {
-  transform:translateX(120%);
-}
-#nick.show {
-  transform:translateX(0) translateY(10px);
-}
-#judy.show {
-  transform:translateX(0);
-}
+#nick { transform:translateX(-120%) translateY(10px); }
+#judy { transform:translateX(120%); }
+.character.show { opacity:1; transform:translateX(0) translateY(0); }
 
 @keyframes floaty {
   0%,100% { transform:translateY(0); }
-  50% { transform:translateY(-10px); }
+  50% { transform:translateY(-8px); }
 }
 
 /* ===== BOTÓN ===== */
@@ -192,13 +202,13 @@ p {
   display:inline-block;
   background:linear-gradient(90deg,#ff8fb5,#ff6b8a);
   color:#fff;
-  padding:10px 20px;
+  padding:10px 22px;
   border-radius:999px;
   margin-top:20px;
   text-decoration:none;
   font-weight:600;
   box-shadow:0 6px 18px rgba(255,107,138,0.3);
-  transition:transform 0.2s;
+  transition:transform 0.25s;
 }
 .btn:hover {transform:scale(1.05);}
 
@@ -276,7 +286,6 @@ function startScene2(){
   document.getElementById("scene1").style.display="none";
   document.getElementById("scene2").style.display="block";
 
-  // Animación de entrada de Nick y Judy
   setTimeout(()=>{
     document.getElementById("nick").classList.add("show");
     document.getElementById("judy").classList.add("show");
