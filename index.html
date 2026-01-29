@@ -2,16 +2,16 @@
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Zootopia — Nuestra Aventura 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zootopia — Nuestra Historia 💖</title>
 <style>
 :root {
-  --text:#fff;
-  --accent:#ff6b8a;
-  --shadow:rgba(0,0,0,0.5);
+  --text: #fff;
+  --accent: #ff6b8a;
+  --shadow: rgba(0, 0, 0, 0.5);
 }
 
-/* Base */
+/* ===== RESET & BASE ===== */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{
   width:100%;height:100%;
@@ -19,132 +19,181 @@ html,body{
   background:#0f1226;
   font-family:"Poppins",sans-serif;
   color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* Fondos */
+/* ===== BACKGROUNDS ===== */
 .bg{
-  position:fixed;inset:0;
+  position:fixed;
+  inset:0;
   background-position:center center;
   background-size:cover;
   background-repeat:no-repeat;
-  background-attachment:fixed;
   opacity:0;
-  transition:opacity 1.5s ease;
+  transition:opacity 1.3s ease;
   z-index:0;
-  filter:brightness(0.9) contrast(1.05) saturate(1.1);
+  filter:brightness(1.03) contrast(1.05) saturate(1.1);
 }
-.bg.show{opacity:1;}
+.bg.show{
+  opacity:1;
+  animation:slowPan 25s ease-in-out infinite;
+}
+@keyframes slowPan{
+  0%{background-position:center;}
+  50%{background-position:center top;}
+  100%{background-position:center;}
+}
 
-/* Oscurecido suave */
 .overlay{
-  position:fixed;inset:0;
-  background:radial-gradient(circle at center,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.55) 100%);
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
   z-index:1;
 }
 
-/* Confeti y corazones */
-.confetti,.hearts{
+/* ===== CONFETTI & HEARTS ===== */
+.confetti, .hearts {
   position:fixed;top:0;left:0;width:100%;height:100%;
   overflow:hidden;pointer-events:none;z-index:5;
 }
-.emoji{
+.emoji {
   position:absolute;font-size:22px;animation:fall linear forwards;user-select:none;
 }
-@keyframes fall{
-  0%{transform:translateY(-10vh) rotate(0deg);opacity:1;}
-  100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
+@keyframes fall {
+  0% { transform:translateY(-10vh) rotate(0deg); opacity:1; }
+  100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
 }
 
-/* Contenedor principal */
+/* ===== MAIN STAGE ===== */
 .stage{
-  position:relative;z-index:10;text-align:center;
-  width:100%;max-width:900px;padding:20px;
-  margin:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+  z-index:10;
+  text-align:center;
+  width:100%;
+  max-width:900px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 
-/* Botón tipo sobre */
-.envelope{
-  width:240px;height:160px;background:linear-gradient(180deg,#ff8fb5,#ff6b8a);
-  border-radius:12px;box-shadow:0 8px 25px var(--shadow);
-  position:relative;cursor:pointer;transition:transform .3s ease;
+/* ===== ENVELOPE ===== */
+.envelope {
+  width:220px;
+  height:150px;
+  background:linear-gradient(180deg,#ff8fb5,#ff6b8a);
+  border-radius:12px;
+  box-shadow:0 8px 25px var(--shadow);
+  position:relative;
+  cursor:pointer;
+  transition:transform .3s ease;
 }
 .envelope:hover{transform:scale(1.05);}
-.envelope::before{
-  content:"";position:absolute;inset:0;
+.envelope::before {
+  content:"";
+  position:absolute;
+  inset:0;
   clip-path:polygon(0 0,100% 0,50% 60%);
   background:linear-gradient(135deg,#ffc1d2,#ff6b8a);
 }
-.envelope::after{
-  content:"💖";position:absolute;top:60%;left:50%;
+.envelope::after {
+  content:"💖";
+  position:absolute;
+  top:60%;
+  left:50%;
   transform:translate(-50%,-50%);
-  font-size:36px;animation:beat 1.4s infinite alternate;
+  font-size:34px;
+  animation:beat 1.4s infinite alternate;
 }
-@keyframes beat{from{transform:translate(-50%,-50%) scale(0.9);}to{transform:translate(-50%,-50%) scale(1.2);}}
+@keyframes beat {
+  from { transform:translate(-50%,-50%) scale(0.9); }
+  to { transform:translate(-50%,-50%) scale(1.2); }
+}
 
-/* Carta / escena */
-.card{
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,182,193,0.25);
-  border-radius:18px;
-  padding:25px 20px;
+/* ===== CARD ===== */
+.card {
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,182,193,0.3);
+  border-radius:20px;
+  padding:30px 25px;
   backdrop-filter:blur(8px);
   box-shadow:0 8px 25px rgba(0,0,0,0.4);
-  max-width:460px;
+  max-width:420px;
   margin:auto;
-  opacity:0;transform:scale(0.85);
+  opacity:0;
+  transform:scale(0.9);
   transition:opacity 1s ease,transform 1s ease;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
-.card.show{opacity:1;transform:scale(1);}
-h1{font-size:26px;margin-bottom:10px;text-shadow:0 2px 6px var(--shadow);}
-p{font-size:17px;line-height:1.6;white-space:pre-line;}
+.card.show {opacity:1;transform:scale(1);}
+h1 {
+  font-size:24px;
+  margin-bottom:12px;
+  text-shadow:0 2px 6px var(--shadow);
+}
+p {
+  font-size:16px;
+  line-height:1.6;
+  white-space:pre-line;
+}
 
-/* Personajes */
-.characters{
+/* ===== CHARACTERS ===== */
+.characters {
   display:flex;
   justify-content:center;
   align-items:flex-end;
-  gap:40px;
-  margin-top:25px;
+  gap:20px;
+  margin-top:20px;
+  flex-wrap:wrap;
 }
-.character{
-  width:300px;
-  max-width:40vw;
+.character {
+  width:38vw;
+  max-width:220px;
   height:auto;
-  opacity:0.96;
+  opacity:0.97;
   filter:drop-shadow(0 10px 22px rgba(0,0,0,0.5))
           brightness(1.05)
           contrast(1.05);
   animation:floaty 6s ease-in-out infinite;
-  transition:transform 1.5s ease;
 }
-#nick{
-  width:500px;
-  opacity:0.99;
-}
-#judy{
-  width:300px;
-  opacity:0.95;
-}
-@keyframes floaty{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-12px);}
+@keyframes floaty {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-10px); }
 }
 
-/* Botón siguiente */
-.btn{
+/* ===== BUTTON ===== */
+.btn {
   display:inline-block;
   background:linear-gradient(90deg,#ff8fb5,#ff6b8a);
-  color:#fff;padding:10px 20px;border-radius:999px;
-  margin-top:20px;text-decoration:none;font-weight:600;
+  color:#fff;
+  padding:10px 20px;
+  border-radius:999px;
+  margin-top:20px;
+  text-decoration:none;
+  font-weight:600;
   box-shadow:0 6px 18px rgba(255,107,138,0.3);
   transition:transform 0.2s;
 }
-.btn:hover{transform:scale(1.05);}
+.btn:hover {transform:scale(1.05);}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:600px) {
+  .card { max-width:85%; padding:25px 20px; }
+  h1 { font-size:22px; }
+  p { font-size:15px; }
+  .character { max-width:180px; }
+}
 </style>
 </head>
 <body>
 
-<!-- Fondos -->
+<!-- ===== BACKGROUNDS ===== -->
 <div class="bg show" id="bg1" style="background-image:url('fondo1.jpg')"></div>
 <div class="bg" id="bg2" style="background-image:url('fondo2.jpg')"></div>
 <div class="bg" id="bg3" style="background-image:url('fondo3.jpg')"></div>
@@ -154,60 +203,58 @@ p{font-size:17px;line-height:1.6;white-space:pre-line;}
 <div class="hearts" id="hearts"></div>
 
 <div class="stage">
-  <!-- Escena 1 -->
+  <!-- SCENE 1 -->
   <div id="scene1">
     <div class="envelope" onclick="startScene2()"></div>
   </div>
 
-  <!-- Escena 2 -->
+  <!-- SCENE 2 -->
   <div id="scene2" style="display:none;">
     <div class="card show">
       <h1>En la ciudad de Zootopia...</h1>
-      <p>Dos almas se cruzaron y, sin saberlo,  
-        empezaron a escribir su propia historia.  
+      <p>dos almas se cruzaron y, sin saberlo,  
+empezaron a escribir su propia historia.  
 Juntos aprendieron que el amor rompe todas las reglas 🦊🐰</p>
       <div class="characters">
-        <img src="nick.png" id="nick" class="character" alt="Nick Wilde">
-        <img src="judy.png" id="judy" class="character" alt="Judy Hopps">
+        <img src="nick.png" class="character" alt="Nick Wilde">
+        <img src="judy.png" class="character" alt="Judy Hopps">
       </div>
       <a class="btn" href="#" onclick="startScene3()">Continuar ➜</a>
     </div>
   </div>
 
-  <!-- Escena 3 -->
+  <!-- SCENE 3 -->
   <div id="scene3" style="display:none;">
     <div class="card show">
-      <h1>Gracias por ser parte de mi Zootopia 🌙</h1>
+      <h1>Gracias por ser mi Zootopia 🌙</h1>
       <p>Tu amor es mi aventura favorita,  
-        mi calma, mi locura y mi hogar.  
-        Te amo con todo mi corazón 💖</p>
+mi calma, mi locura y mi hogar.  
+Te amo con todo mi corazón 💖</p>
       <a class="btn" href="#" onclick="replay()">Volver a empezar</a>
     </div>
   </div>
 </div>
 
-<!-- 🎶 Música -->
+<!-- 🎵 Música -->
 <audio id="musica" src="musica.mp3" preload="auto" loop></audio>
 
 <script>
-const musica = document.getElementById("musica");
-const confettiContainer = document.getElementById("confetti");
-const heartsContainer = document.getElementById("hearts");
+const musica=document.getElementById("musica");
+const confettiContainer=document.getElementById("confetti");
+const heartsContainer=document.getElementById("hearts");
 let confettiInterval;
 
 function startScene2(){
-  musica.currentTime = 0;
+  musica.currentTime=0;
   musica.play().catch(()=>{
     document.body.addEventListener('touchstart',()=>musica.play(),{once:true});
   });
-
   document.getElementById("bg1").classList.remove("show");
   document.getElementById("bg2").classList.add("show");
   document.getElementById("scene1").style.display="none";
   document.getElementById("scene2").style.display="block";
-
   lanzarConfetti();
-  confettiInterval = setInterval(lanzarConfetti, 4000);
+  confettiInterval=setInterval(lanzarConfetti,4000);
 }
 
 function startScene3(){
@@ -227,8 +274,8 @@ function replay(){
 }
 
 function lanzarConfetti(){
-  const emojis = ["🌸","✨","🦖","🧸","💗"];
-  for(let i=0;i<25;i++){
+  const emojis=["🌸","✨","💞","🦖","🧸","💗"];
+  for(let i=0;i<20;i++){
     setTimeout(()=>{
       const e=document.createElement("div");
       e.classList.add("emoji");
@@ -236,7 +283,7 @@ function lanzarConfetti(){
       let x;do{x=Math.random()*100;}while(x>40&&x<60);
       e.style.left=x+"vw";
       e.style.animationDuration=(3+Math.random()*3)+"s";
-      e.style.fontSize=(18+Math.random()*20)+"px";
+      e.style.fontSize=(16+Math.random()*20)+"px";
       confettiContainer.appendChild(e);
       setTimeout(()=>e.remove(),6000);
     },i*80);
@@ -260,4 +307,3 @@ function lanzarCorazones(){
 </script>
 </body>
 </html>
-
