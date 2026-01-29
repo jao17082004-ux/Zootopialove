@@ -11,7 +11,6 @@
   --accent2:#a96bff;
   --gold:#ffd6a5;
   --text:#fff;
-  --shadow:rgba(0,0,0,0.6);
 }
 
 /* ===== BASE ===== */
@@ -44,7 +43,6 @@ html,body{
   0%{transform:scale(1);}
   100%{transform:scale(1.08);}
 }
-
 .overlay{
   position:fixed;
   inset:0;
@@ -81,12 +79,12 @@ html,body{
   transition:transform 1s ease;
   margin:auto;
   opacity:0;
-  animation:envelopeIntro 1.6s ease forwards;
+  animation:envelopeIntro 2.2s ease forwards;
 }
 @keyframes envelopeIntro {
-  0% {opacity:0; transform:translateY(120px) scale(0.8);}
-  60% {opacity:1; transform:translateY(-10px) scale(1.05);}
-  100% {opacity:1; transform:translateY(0) scale(1);}
+  0% {opacity:0; transform:translateY(180px) scale(0.85);}
+  70% {opacity:1; transform:translateY(-10px) scale(1.05);}
+  100% {opacity:1; transform:translateY(-60px) scale(1);}
 }
 
 .envelope:hover {transform:scale(1.05);}
@@ -109,14 +107,33 @@ html,body{
 }
 @keyframes beat{from{transform:translate(-50%,-50%) scale(0.9);}to{transform:translate(-50%,-50%) scale(1.2);}}
 
+/* ✨ AURA MÁGICA GIRATORIA */
+.magic-glow {
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:300px;
+  height:300px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:conic-gradient(from 0deg, rgba(255,214,165,0.2), rgba(255,107,138,0.4), rgba(169,107,255,0.2), rgba(255,214,165,0.2));
+  filter:blur(25px);
+  animation:rotateGlow 6s linear infinite;
+  z-index:-1;
+}
+@keyframes rotateGlow{
+  from{transform:translate(-50%,-50%) rotate(0deg);}
+  to{transform:translate(-50%,-50%) rotate(360deg);}
+}
+
 /* Apertura del sobre */
 .envelope.open {
   animation:openEnvelope 1.2s forwards ease-in-out;
 }
 @keyframes openEnvelope {
-  0% {transform:rotateX(0deg);}
-  50% {transform:rotateX(40deg);}
-  100% {transform:translateY(-140px) scale(0.8);}
+  0% {transform:rotateX(0deg) translateY(-60px);}
+  50% {transform:rotateX(40deg) translateY(-40px);}
+  100% {transform:translateY(-200px) scale(0.8);}
 }
 
 /* ===== CARTA ===== */
@@ -228,12 +245,13 @@ html,body{
 <div class="overlay"></div>
 
 <div class="confetti" id="confetti"></div>
-<div class="hearts" id="hearts"></div>
 
 <div class="stage">
   <!-- ESCENA 1 -->
   <div id="scene1">
-    <div class="envelope" id="envelope" onclick="openEnvelope()"></div>
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+      <div class="magic-glow"></div>
+    </div>
   </div>
 
   <!-- ESCENA 2 -->
@@ -316,8 +334,8 @@ function restart(){
   envelope.classList.remove("open");
   envelope.style.opacity="0";
   envelope.style.animation="none";
-  void envelope.offsetWidth; // reiniciar animación
-  envelope.style.animation="envelopeIntro 1.6s ease forwards";
+  void envelope.offsetWidth; // reinicia animación
+  envelope.style.animation="envelopeIntro 2.2s ease forwards";
 }
 function lanzarConfetti(){
   const emojis=["🌸","✨","💞","🦖","🧸","💗","🌷","⭐"];
