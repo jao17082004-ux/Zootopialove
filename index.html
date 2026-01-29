@@ -79,6 +79,7 @@ html,body{
   cursor:pointer;
   transform-style:preserve-3d;
   transition:transform 1s ease;
+  margin:auto;
 }
 .envelope:hover {transform:scale(1.05);}
 .envelope::before{
@@ -301,6 +302,16 @@ function restart(){
   document.getElementById("scene1").style.display="block";
   document.getElementById("bg3").classList.remove("show");
   document.getElementById("bg1").classList.add("show");
+
+  // 💖 Restaurar el sobre
+  const envelope=document.getElementById("envelope");
+  envelope.classList.remove("open");
+  envelope.style.transform="translateY(50px) scale(0.8)";
+  setTimeout(()=>{
+    envelope.style.transition="transform 0.8s ease";
+    envelope.style.transform="translateY(0) scale(1)";
+    setTimeout(()=>envelope.style.transition="",800);
+  },100);
 }
 
 function lanzarConfetti(){
